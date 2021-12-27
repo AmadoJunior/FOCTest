@@ -1,11 +1,12 @@
 #include <SimpleFOC.h>
+#include <Wire.h>
 
 // Stepper motor instance
 StepperMotor motor1 = StepperMotor(50);
 StepperMotor motor2 = StepperMotor(50);
 // Stepper driver instance
-StepperDriver4PWM driver1 = StepperDriver4PWM(13, 12, 14, 27);
-StepperDriver4PWM driver2 = StepperDriver4PWM(13, 12, 14, 27);
+StepperDriver4PWM driver1 = StepperDriver4PWM(15, 2, 4, 16);
+StepperDriver4PWM driver2 = StepperDriver4PWM(17, 5, 18, 19);
 
 // encoder instance
 MagneticSensorI2C sensor1 = MagneticSensorI2C(AS5600_I2C);
@@ -19,11 +20,13 @@ void onMotor2(char* cmd){ command.motor(&motor2, cmd); }
 void setup() {
 
   // initialize encoder sensor hardware
-  sensor2.scl_pin = 35;
-  sensor2.sda_pin = 34;
-  sensor2.i2c_bus = 1;
-  sensor1.init();
-  sensor2.init();
+  Wire.setClock(400000);
+  Wire1.setClock(400000);
+
+  Wire1.begin(35, 34, 400000);
+  
+  sensor1.init(e);
+  sensor2.init(&Wire1);
   
   // link the motor to the sensor
   motor1.linkSensor(&sensor1);
