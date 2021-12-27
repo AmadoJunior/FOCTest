@@ -8,8 +8,8 @@ StepperDriver4PWM driver1 = StepperDriver4PWM(13, 12, 14, 27);
 StepperDriver4PWM driver2 = StepperDriver4PWM(13, 12, 14, 27);
 
 // encoder instance
-MagneticSensorAnalog sensor1 = MagneticSensorAnalog(15, 0, 4095);
-MagneticSensorAnalog sensor2 = MagneticSensorAnalog(2, 0, 4095);
+MagneticSensorI2C sensor1 = MagneticSensorI2C(AS5600_I2C);
+MagneticSensorI2C sensor2 = MagneticSensorI2C(AS5600_I2C);
 
 // commander interface
 Commander command = Commander(Serial);
@@ -19,6 +19,9 @@ void onMotor2(char* cmd){ command.motor(&motor2, cmd); }
 void setup() {
 
   // initialize encoder sensor hardware
+  sensor2.scl_pin = 35;
+  sensor2.sda_pin = 34;
+  sensor2.i2c_bus = 1;
   sensor1.init();
   sensor2.init();
   
