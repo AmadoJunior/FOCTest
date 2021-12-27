@@ -42,8 +42,8 @@ void setup() {
   //motor.torque_controller = TorqueControlType::voltage;
 
   // set control loop type to be used
-  motor1.controller = MotionControlType::torque;
-  motor2.controller = MotionControlType::torque;
+  motor1.controller = MotionControlType::angle;
+  motor2.controller = MotionControlType::angle;
   
 
   // controller configuration based on the control type 
