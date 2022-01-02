@@ -6,7 +6,7 @@ StepperMotor motor1 = StepperMotor(50);
 StepperMotor motor2 = StepperMotor(50);
 // Stepper driver instance
 StepperDriver4PWM driver1 = StepperDriver4PWM(15, 2, 4, 16);
-StepperDriver4PWM driver2 = StepperDriver4PWM(17, 5, 18, 19);
+StepperDriver4PWM driver2 = StepperDriver4PWM(17, 5, 18, 34);
 
 // encoder instance
 MagneticSensorI2C sensor1 = MagneticSensorI2C(AS5600_I2C);
@@ -23,10 +23,10 @@ void setup() {
   Wire.setClock(400000);
   Wire1.setClock(400000);
 
-  Wire1.begin(35, 34, 400000);
+  Wire1.begin(19, 23, 400000);
   
-  sensor1.init(e);
-  sensor2.init(&Wire1);
+  sensor1.init(&Wire1);
+  sensor2.init();
   
   // link the motor to the sensor
   motor1.linkSensor(&sensor1);
@@ -48,8 +48,8 @@ void setup() {
   //motor.torque_controller = TorqueControlType::voltage;
 
   // set control loop type to be used
-  motor1.controller = MotionControlType::angle;
-  motor2.controller = MotionControlType::angle;
+  motor1.controller = MotionControlType::torque;
+  motor2.controller = MotionControlType::torque;
   
 
   // controller configuration based on the control type 
@@ -65,7 +65,7 @@ void setup() {
   // default voltage_power_supply
   motor1.voltage_limit = 12;
   motor1.current_limit = 1.3;
-  motor2.voltage_limit = 12;
+  motor2.voltage_limit =12;
   motor2.current_limit = 1.3;
   // velocity low pass filtering time constant
   motor1.LPF_velocity.Tf = 0.01;
@@ -93,8 +93,8 @@ void setup() {
   motor2.initFOC();
 
   // set the initial target value
-  motor1.target = 2;
-  motor2.target = 2;
+  motor1.target = 0;
+  motor2.target = 0;
 
   // define the motor id
   command.add('M', onMotor1, "motor1");
