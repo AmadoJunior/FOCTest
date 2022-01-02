@@ -6,7 +6,7 @@ StepperMotor motor1 = StepperMotor(50);
 StepperMotor motor2 = StepperMotor(50);
 // Stepper driver instance
 StepperDriver4PWM driver1 = StepperDriver4PWM(15, 2, 4, 16);
-StepperDriver4PWM driver2 = StepperDriver4PWM(17, 5, 18, 34);
+StepperDriver4PWM driver2 = StepperDriver4PWM(13, 12, 14, 27);
 
 // encoder instance
 MagneticSensorI2C sensor1 = MagneticSensorI2C(AS5600_I2C);
@@ -37,9 +37,9 @@ void setup() {
   motor2.foc_modulation = FOCModulationType::SpaceVectorPWM;
 
   // power supply voltage [V]
-  driver1.voltage_power_supply = 12;
+  driver1.voltage_power_supply = 10;
   driver1.init();
-  driver2.voltage_power_supply = 12;
+  driver2.voltage_power_supply = 10;
   driver2.init();
   // link the motor to the sensor
   motor1.linkDriver(&driver1);
@@ -56,16 +56,16 @@ void setup() {
   motor1.PID_velocity.P = 0.2;
   motor1.PID_velocity.I = 20;
   motor1.PID_velocity.D = 0.00;
-  //motor1.PID_velocity.output_ramp = .5;
+  motor1.PID_velocity.output_ramp = .5;
   motor2.PID_velocity.P = 0.2;
   motor2.PID_velocity.I = 20;
   motor2.PID_velocity.D = 0.00;
-  //motor2.PID_velocity.output_ramp = .5;
+  motor2.PID_velocity.output_ramp = .5;
   
   // default voltage_power_supply
-  motor1.voltage_limit = 12;
+  motor1.voltage_limit = 10;
   motor1.current_limit = 1.3;
-  motor2.voltage_limit =12;
+  motor2.voltage_limit = 10;
   motor2.current_limit = 1.3;
   // velocity low pass filtering time constant
   motor1.LPF_velocity.Tf = 0.01;
